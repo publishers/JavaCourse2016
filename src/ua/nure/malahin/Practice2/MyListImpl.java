@@ -13,7 +13,7 @@ import ua.nure.malahin.Practice2.ListIterator;
 import ua.nure.malahin.Practice2.MyList;
 
 public class MyListImpl implements MyList, ListIterable {
-    private int arrSize = 3;
+    private int arrSize = 2;
     private Object[] arr;
     private int size;
 
@@ -23,7 +23,7 @@ public class MyListImpl implements MyList, ListIterable {
     }
 
     public void add(Object e) {
-        if (arr.length >= size) {
+        if (arr.length <= size) {
             resize();
             arr[size++] = e;
         } else {
@@ -66,12 +66,9 @@ public class MyListImpl implements MyList, ListIterable {
 
     public boolean contains(Object o) {
         boolean contains = false;
-        Object[] var3 = this.arr;
-        int var4 = var3.length;
-
-        for (int var5 = 0; var5 < var4; ++var5) {
-            Object e = var3[var5];
-            if (o.equals(e)) {
+        Object[] tmp = arr;
+        for (int i = 0; i < size; ++i) {
+            if (o.equals(tmp[i])) {
                 contains = true;
                 break;
             }
@@ -174,16 +171,17 @@ public class MyListImpl implements MyList, ListIterable {
         public void set(Object e) {
             if (!isCalledPrevious && !isCalledNext()) {
                 throw new IllegalStateException();
-            } else {
-                arr[step <= size() ? step : -1] = e;
-                isCalledPrevious = false;
-                setCalledNext(false);
             }
+
+            arr[step >= 0 ? (isCalledPrevious  ? step : (isCalledNext() ? step - 1 : -1)) : 0] = e;
+            isCalledPrevious = false;
+            setCalledNext(false);
+
         }
 
         public void remove() {
             if ((isCalledPrevious || isCalledNext()) && !isCalledRemove()) {
-                deleteByIndex(this.step - 1 >= 0 ? (isCalledNext() ? step - 1 : (isCalledPrevious ? step : 0)) : 0);
+                deleteByIndex(step - 1 >= 0 ? (isCalledNext() ? step - 1 : (isCalledPrevious ? step : 0)) : 0);
                 --step;
                 isCalledPrevious = false;
                 setCalledNext(false);
