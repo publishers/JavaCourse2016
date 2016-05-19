@@ -8,9 +8,6 @@ package ua.nure.malahin.Practice2;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import ua.nure.malahin.Practice2.ListIterable;
-import ua.nure.malahin.Practice2.ListIterator;
-import ua.nure.malahin.Practice2.MyList;
 
 public class MyListImpl implements MyList, ListIterable {
     private int arrSize = 2;
@@ -160,11 +157,23 @@ public class MyListImpl implements MyList, ListIterable {
         }
 
         public Object previous() {
-            isCalledPrevious = true;
-            if (step - 1 < 0) {
+
+            if (isCalledNext()){
+                step--;
+            }
+
+            if (isCalledPrevious){
+                step--;
+            }
+
+            if (step < 0) {
                 throw new NoSuchElementException();
             } else {
-                return MyListImpl.this.arr[step - 1 >= 0 ? --step : -1];
+                isCalledPrevious = true;
+                setCalledNext(false);
+                setCalledRemove(false);
+
+                return MyListImpl.this.arr[step];
             }
         }
 
@@ -181,7 +190,8 @@ public class MyListImpl implements MyList, ListIterable {
 
         public void remove() {
             if ((isCalledPrevious || isCalledNext()) && !isCalledRemove()) {
-                deleteByIndex(step - 1 >= 0 ? (isCalledNext() ? step - 1 : (isCalledPrevious ? step : 0)) : 0);
+                MyListImpl.this.deleteByIndex(step - 1 >= 0 ? (isCalledNext() ? step - 1 : (isCalledPrevious ? step : 0)) : 0);
+                if(size + 1 == step) --step;
                 --step;
                 isCalledPrevious = false;
                 setCalledNext(false);
@@ -224,7 +234,8 @@ public class MyListImpl implements MyList, ListIterable {
                 throw new IllegalStateException();
             } else {
                 isCalledRemove = true;
-                MyListImpl.this.deleteByIndex(--this.step > 0 ? this.step : 0);
+                MyListImpl.this.deleteByIndex(this.step - 1 > 0 ? this.step - 1 : (this.step - 1 < 0 ? - 1 : 0));
+                step--;
             }
         }
 

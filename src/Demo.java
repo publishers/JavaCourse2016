@@ -2,8 +2,12 @@
 // (powered by Fernflower decompiler)
 
 
+import ua.nure.malahin.Practice2.ListIterable;
 import ua.nure.malahin.Practice2.ListIterator;
+import ua.nure.malahin.Practice2.MyList;
 import ua.nure.malahin.Practice2.MyListImpl;
+
+import java.util.Iterator;
 
 public class Demo {
     public Demo() {
@@ -12,29 +16,36 @@ public class Demo {
     public static void main(String[] args) {
         MyListImpl con = new MyListImpl();
         con.add("A");
-        con.add("O");
+        con.add("B");
 
-        con.add("O");
-        MyListImpl con2 = new MyListImpl();
-        con2.add("A");
-        con2.add("O");
-        con2.add("A1");
-        con2.add("2");
+        con.add("T");
+
         ListIterator iter = con.listIterator();
-//        System.out.println(iter.hasPrevious());
-//        iter.next();
-//        iter.next();
-//        iter.previous();
-//        iter.previous();
-//        iter.previous();
-//        iter.set("K");
-        System.out.println(con.containsAll(con2));
+        iter.next();
+        iter.next();
+        iter.remove();
+        iter.next();
+        iter.set("P");
+        iter.previous();
+        iter.remove();
+
+//        System.out.println(iter.previous());
+//        System.out.println(iter.previous());
+        System.out.println(iter.previous());
+
+
+//        System.out.println(iter.previous());
 //        iter.remove();
-//        iter.previous();
+//        System.out.println(iter.previous());
 //        iter.remove();
-//        iter.previous();
-//        iter.next();
+//        System.out.println(iter.previous());
+////        System.out.println(iter.next());
 //        iter.remove();
+//        con.add("T");
+//        System.out.println(iter.next());
+//        System.out.println(iter.next());
+//        con.add("T");
+        System.out.println(con);
 
     }
 }
