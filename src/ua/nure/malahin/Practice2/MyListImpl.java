@@ -75,7 +75,7 @@ public class MyListImpl implements MyList, ListIterable {
     }
 
     private void resize() {
-        Object[] newArr = new Object[(int) (arr.length * 1.5D)];
+        Object[] newArr = new Object[(int) (arr.length * 1.5D + 1)];
 
         for (int i = 0; i < arr.length; ++i) {
             newArr[i] = arr[i];
