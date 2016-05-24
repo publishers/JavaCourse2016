@@ -22,30 +22,31 @@ public class Demo {
 
         ListIterator iter = con.listIterator();
         iter.next();
+        iter.set("J");
         iter.next();
-        iter.remove();
+        iter.set("Y");
         iter.next();
         iter.set("P");
-        iter.previous();
-        iter.remove();
-
-//        System.out.println(iter.previous());
-//        System.out.println(iter.previous());
-        System.out.println(iter.previous());
-
-
-//        System.out.println(iter.previous());
-//        iter.remove();
-//        System.out.println(iter.previous());
-//        iter.remove();
-//        System.out.println(iter.previous());
-////        System.out.println(iter.next());
-//        iter.remove();
-//        con.add("T");
-//        System.out.println(iter.next());
-//        System.out.println(iter.next());
-//        con.add("T");
         System.out.println(con);
+
+        System.out.println(iter.previous());
+        iter.remove();
+        System.out.println(iter.previous());
+        iter.set("W");
+//        iter.remove();
+        System.out.println(iter.previous());
+        iter.remove();
+//        iter.set("E");
+        System.out.println(con);
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~");
+        for (Object o : con) {
+            System.out.println(o);
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~");
+        Iterator<Object> it = con.iterator();
+        while (it.hasNext())
+            System.out.println(it.next());
 
     }
 }

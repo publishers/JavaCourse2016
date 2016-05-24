@@ -151,12 +151,14 @@ public class MyListImpl implements MyList, ListIterable {
 
     private class ListIteratorImpl extends IteratorImpl implements ListIterator {
         private boolean isCalledPrevious;
+        private boolean isCalledSet;
 
         public boolean hasPrevious() {
             return step - 1 >= 0;
         }
 
         public Object previous() {
+            isCalledSet = false;
 
             if (isCalledNext()){
                 step--;
@@ -178,19 +180,38 @@ public class MyListImpl implements MyList, ListIterable {
         }
 
         public void set(Object e) {
-            if (!isCalledPrevious && !isCalledNext()) {
+            if (!isCalledPrevious && !isCalledNext() || (!isCalledNext() && isCalledSet) || isCalledRemove()) {
                 throw new IllegalStateException();
             }
 
-            arr[step >= 0 ? (isCalledPrevious  ? step : (isCalledNext() ? step - 1 : -1)) : 0] = e;
-            isCalledPrevious = false;
-            setCalledNext(false);
+            isCalledSet = true;
+            arr[step >= 0 ?
+                    (isCalledPrevious  ? step :
+                            (isCalledNext() ? step - 1 : 0))
+                    : -1] = e;
+
+            if(!isCalledPrevious){
+                isCalledPrevious = false;
+            }
+            else {
+                setCalledNext(false);
+            }
 
         }
 
         public void remove() {
-            if ((isCalledPrevious || isCalledNext()) && !isCalledRemove()) {
-                MyListImpl.this.deleteByIndex(step - 1 >= 0 ? (isCalledNext() ? step - 1 : (isCalledPrevious ? step : 0)) : 0);
+            if ((isCalledPrevious || isCalledNext()) && !isCalledRemove() && !isCalledSet ) {
+                MyListImpl.this.deleteByIndex(
+                        step - 1 >= 0 ?
+                        (
+                                isCalledNext() ?
+                                        step - 1 :
+                                        (
+                                                isCalledPrevious ? step : 0
+                                        )
+                        )
+                        : 0
+                );
                 if(size + 1 == step) --step;
                 --step;
                 isCalledPrevious = false;
