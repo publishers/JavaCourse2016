@@ -1,9 +1,5 @@
 package ua.nure.malahin.Project3.part5;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 /**
  * Created by sergey on 26.05.16.
  */
@@ -25,21 +21,18 @@ public class Part5 {
             else if (x >= 4000) {
                 return "error";
             }
-
-
-
            if (x >= 9 * base) {
-                tmp.append(basedigit(base)).append(basedigit(base * 10));
+                tmp.append(baseDigit(base)).append(baseDigit(base * 10));
                 x = x - 9 * base;
             } else if (x >= 5 * base) {
-                tmp.append(basedigit(5 * base));
+                tmp.append(baseDigit(5 * base));
                 x = x - 5 * base;
             } else if (x >= 4 * base) {
-                tmp.append(basedigit(base)).append(basedigit(base * 5));
+                tmp.append(baseDigit(base)).append(baseDigit(base * 5));
                 x = x - 4 * base;
             }
             while (x >= base) {
-                tmp.append(basedigit(base));
+                tmp.append(baseDigit(base));
                 x = x - base;
             }
         }
@@ -47,8 +40,28 @@ public class Part5 {
         return tmp.toString();
     }
 
-    public static String basedigit(int x) {  //Convert base digit 1,5,10,50,100,500,1000 to Rom digit
+    public static int roman2Decimal(String s) {
+        int sum = 0;
+        int lastRome = 0;
+        for (char c : s.toCharArray()) {
+            int r = basedString(c);
+            if (sum >= r) {
+                if (lastRome < r) {
+                    sum += r - 2 * lastRome;
+                    lastRome = r;
+                } else {
+                    sum += r;
+                    lastRome = r;
+                }
+            } else {
+                sum = r - sum;
+                lastRome = r;
+            }
+        }
+        return sum;
+    }
 
+    public static String baseDigit(int x) {
         switch (x) {
             case 1:
                 return "I";
@@ -76,54 +89,44 @@ public class Part5 {
         }
     }
 
-    public static int roman2Decimal(String s) {
-        int sum = 0;
-        ROME lastRome = ROME.I;
-        for (char c : s.toCharArray()) {
-            for (ROME r : ROME.values()) {
-                if (c == r.getC()) {
-                    if (sum >= r.getI()) {
-                        if (lastRome.getI() < r.getI()) {
-                            sum += r.getI() - 2 * lastRome.getI();
-                            lastRome = r;
-                            break;
-                        }
-                        sum += r.getI();
-                        lastRome = r;
-                        break;
-                    } else {
-                        sum = r.getI() - sum;
-                        lastRome = r;
-                        break;
-                    }
-                }
-            }
+    public static int basedString(char x) {
+        switch (x) {
+            case 'I':
+                return 1;
+
+            case 'V':
+                return 5;
+
+            case 'X':
+                return 10;
+
+            case 'L':
+                return 50;
+
+            case 'C':
+                return 100;
+
+            case 'D':
+                return 500;
+
+            case 'M':
+                return 1000;
+
+            default:
+                return 0;
         }
-        return sum;
     }
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(decimal2Roman(99));
+
+        for (int i = 1; i < 101; i++) {
+            String deciman2Roman = decimal2Roman(i);
+            System.out.print(i + " ===> ");
+            System.out.print(deciman2Roman + " ===> ");
+            System.out.println(roman2Decimal(deciman2Roman));
+        }
+
     }
 
-}
-
-enum ROME {
-    I(1, 'I'), V(5, 'V'), X(10, 'X'), L(50, 'L'), C(100, 'C'), D(500, 'D'), M(1000, 'M');
-    int i;
-    char c;
-
-    ROME(int i, char c) {
-        this.i = i;
-        this.c = c;
-    }
-
-    public int getI() {
-        return i;
-    }
-
-    public char getC() {
-        return c;
-    }
 }
