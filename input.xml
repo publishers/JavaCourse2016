@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML schema -->
+
+
+<st3:Weapon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:st3="http://nure.ua/malahin/SummaryTask3/entity"
+	xsi:schemaLocation="http://nure.ua/malahin/SummaryTask3/entity input.xsd">
+	<Knife>
+		<Type>sable</Type>
+		<Handy>2</Handy>
+		<Origin>Ukraine</Origin>
+		<Visual>
+			<Width>50</Width>
+			<Size>60</Size>
+			<Material>wood</Material>
+			<Haft xsi:type="st3:Wood">
+				<typeWood>oak</typeWood>
+			</Haft>			
+			<Krovostok isIt="true"></Krovostok>
+		</Visual>
+		<Value>false</Value>
+	</Knife>
+	<Knife>
+		<Type>dagger</Type>
+		<Handy>1</Handy>
+		<Origin>German</Origin>
+		<Visual>
+			<Width>80</Width>
+			<Size>50</Size>
+			<Material>steel</Material>
+			<Haft xsi:type="st3:Steel"/>			
+			<Krovostok isIt="false"></Krovostok>
+		</Visual>
+		<Value>true</Value>
+	</Knife>
+	
+	<Knife>
+		<Type>knife</Type>
+		<Handy>1</Handy>
+		<Origin>German</Origin>
+		<Visual>
+			<Width>30</Width>
+			<Size>40</Size>
+			<Material>steel</Material>
+			<Haft xsi:type="st3:Steel"/>			
+			<Krovostok isIt="false"></Krovostok>
+		</Visual>
+		<Value>true</Value>
+	</Knife>
+</st3:Weapon>
