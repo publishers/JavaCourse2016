@@ -1,4 +1,4 @@
-# JavaEPAMSpring2016
+# Java Tasks from Epam 2016
 <pre>
  Practice2
 Skip to end of metadata
